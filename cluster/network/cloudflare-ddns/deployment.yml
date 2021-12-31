@@ -1,0 +1,45 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: network-cloudflare-ddns
+  namespace: network
+  labels:
+    app: cloudflare-ddns
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cloudflare-ddns
+  template:
+    metadata:
+      labels:
+        app: cloudflare-ddns
+    spec:
+      containers:
+        - name: cloudflare-ddns
+          image: "oznu/cloudflare-ddns:latest"
+          imagePullPolicy: Always
+          env:
+            - name: EMAIL
+              valueFrom:
+                secretKeyRef:
+                  name: cloudflare-ddns
+                  key: cloudflare-ddns-user
+            - name: API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: cloudflare-ddns
+                  key: cloudflare-ddns-token
+            - name: ZONE
+              valueFrom:
+                secretKeyRef:
+                  name: cloudflare-ddns
+                  key: cloudflare-ddns-zones
+            - name: SUBDOMAIN
+              valueFrom:
+                secretKeyRef:
+                  name: cloudflare-ddns
+                  key: cloudflare-ddns-hosts
+            - name: PROXIED
+              value: "false"
