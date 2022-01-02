@@ -2,3 +2,4 @@
 .config.env
 configure.sh
 encrypt.sh
+k3sup.sh
