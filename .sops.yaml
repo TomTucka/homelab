@@ -6,3 +6,7 @@ creation_rules:
     age: >-
       age13n9rn8hp54r09fvr5e3em2rqgcwchu3hexekn2jetvh775unh4vqma4wpa
 
+  - path_regex: terraform/.*\.sops\.ya?ml
+    unencrypted_regex: "^(kind)$"
+    age: >-
+      age13n9rn8hp54r09fvr5e3em2rqgcwchu3hexekn2jetvh775unh4vqma4wpa
