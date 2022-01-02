@@ -27,16 +27,20 @@ spec:
           env:
             - name: vip_arp
               value: "true"
+            - name: vip_interface
+              value: "eno1"
             - name: port
               value: "6443"
             - name: vip_cidr
-              value: "32"
+              value: "32"s
             - name: cp_enable
               value: "true"
             - name: cp_namespace
               value: kube-system
             - name: svc_enable
               value: "false"
+            - name: vip_address
+              value: "10.20.40.39"
           securityContext:
             capabilities:
               add:
