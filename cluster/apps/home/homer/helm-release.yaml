@@ -22,58 +22,8 @@ spec:
     env:
       TZ: "Europe/London"
 
-    homer:
-      title: "Dashboard"
-      subtitle: ${SECRET_CLOUDFLARE_EMAIL}
-      columns: "4"
-      # icon: "fas fa-skull-crossbones" # Optional icon
-      header: true
-      footer: false
-      theme: default
-      colors:
-        dark:
-          highlight-primary: "#2E3440"
-          highlight-secondary: "#4C566A"
-          highlight-hover: "#81A1C1"
-          background: "#3B4252"
-          card-background: "#2E3440"
-          text: "#D8DEE9"
-          text-header: "#D8DEE9"
-          text-title: "#81A1C1"
-          text-subtitle: "#81A1C1"
-          card-shadow: rgba(0, 0, 0, 0.4)
-          link-hover: "#BF616A"
-      links:
-        - name: "/r/all"
-          icon: "fab fa-reddit-square"
-          url: "https://reddit.com/r/all"
-        - name: "/r/homelab"
-          icon: "fab fa-reddit-square"
-          url: "https://reddit.com/r/homelab"
-          target: "_blank" # optionnal html a tag target attribute
-        - name: "/r/selfhosted"
-          icon: "fab fa-reddit-square"
-          url: "https://reddit.com/r/homelab"
+    # homer:
 
-      services:
-        - name: "Servers"
-          icon: "fas fa-server"
-          items:
-            - name: "Proxmox"
-            # icon: "fas fa-database"
-              logo: "assets/tools/proxmox-sm.png"
-              tag: "server"
-              url: "https://172.72.22.5:8006/"
-              target: "_blank"
-        - name: "Cloud"
-          icon: "fas fa-cloud"
-          items:
-            - name: "Proxmox"
-            # icon: "fas fa-database"
-              logo: "assets/tools/proxmox-sm.png"
-              tag: "server"
-              url: "https://172.72.22.5:8006/"
-              target: "_blank"
 
     ingress:
       main:
@@ -103,3 +53,60 @@ spec:
         memory: 128Mi
       limits:
         memory: 256Mi
+
+    configmap:
+      config:
+        # -- Store homer configuration as a ConfigMap
+        enabled: false
+        data:
+          title: "Dashboard"
+          subtitle: ${SECRET_CLOUDFLARE_EMAIL}
+          columns: "4"
+          # icon: "fas fa-skull-crossbones" # Optional icon
+          header: true
+          footer: false
+          theme: default
+          colors:
+            dark:
+              highlight-primary: "#2E3440"
+              highlight-secondary: "#4C566A"
+              highlight-hover: "#81A1C1"
+              background: "#3B4252"
+              card-background: "#2E3440"
+              text: "#D8DEE9"
+              text-header: "#D8DEE9"
+              text-title: "#81A1C1"
+              text-subtitle: "#81A1C1"
+              card-shadow: rgba(0, 0, 0, 0.4)
+              link-hover: "#BF616A"
+          links:
+            - name: "/r/all"
+              icon: "fab fa-reddit-square"
+              url: "https://reddit.com/r/all"
+            - name: "/r/homelab"
+              icon: "fab fa-reddit-square"
+              url: "https://reddit.com/r/homelab"
+              target: "_blank" # optionnal html a tag target attribute
+            - name: "/r/selfhosted"
+              icon: "fab fa-reddit-square"
+              url: "https://reddit.com/r/homelab"
+
+          services:
+            - name: "Servers"
+              icon: "fas fa-server"
+              items:
+                - name: "Proxmox"
+                # icon: "fas fa-database"
+                  logo: "assets/tools/proxmox-sm.png"
+                  tag: "server"
+                  url: "https://172.72.22.5:8006/"
+                  target: "_blank"
+            - name: "Cloud"
+              icon: "fas fa-cloud"
+              items:
+                - name: "Proxmox"
+                # icon: "fas fa-database"
+                  logo: "assets/tools/proxmox-sm.png"
+                  tag: "server"
+                  url: "https://172.72.22.5:8006/"
+                  target: "_blank"
