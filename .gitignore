@@ -3,3 +3,9 @@
 configure.sh
 encrypt.sh
 k3sup.sh
+
+**/.terraform/*
+
+# .tfstate files
+**/*.tfstate
+**/*.tfstate.*
