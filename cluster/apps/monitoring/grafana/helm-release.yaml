@@ -130,9 +130,6 @@ spec:
       - grafana-worldmap-panel
       - grafana-clock-panel
 
-    serviceMonitor:
-      enabled: true
-
     ingress:
       enabled: true
       annotations:

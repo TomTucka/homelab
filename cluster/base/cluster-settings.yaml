@@ -5,6 +5,7 @@ metadata:
   name: cluster-settings
   namespace: flux-system
 data:
+  GATEWAY_ADDR: 10.20.40.1
   METALLB_LB_RANGE: 10.20.40.40-10.20.40.50
   METALLB_TRAEFIK_ADDR: 10.20.40.40
   SVC_BLOCKY_ADDR: 10.20.40.41
