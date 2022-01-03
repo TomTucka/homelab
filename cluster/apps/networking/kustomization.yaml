@@ -4,6 +4,6 @@ resources:
   - cloudflare-ddns
   - traefik
   - external-dns
-  # - blocky
+  - blocky
   - wildcard-certificate
 
