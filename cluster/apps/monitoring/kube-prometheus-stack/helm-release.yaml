@@ -67,13 +67,16 @@ spec:
             equal: ["alertname", "namespace"]
       ingress:
         enabled: true
-        pathType: Prefix
-        ingressClassName: "nginx"
+        ingressClassName: "traefik"
+        annotations:
+          cert-manager.io/cluster-issuer: "letsencrypt-production"
+          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
         hosts:
-          - "alert-manager.${SECRET_PUBLIC_DOMAIN}"
+        - "alerts.${SECRET_DOMAIN}"
         tls:
-          - hosts:
-              - "alert-manager.${SECRET_PUBLIC_DOMAIN}"
+          - secretName: "alert-manager-cert"
+            hosts:
+              - "alerts.${SECRET_DOMAIN}"
       # alertmanagerSpec:
       #   storage:
       #     volumeClaimTemplate:
@@ -117,9 +120,9 @@ spec:
     kubeControllerManager:
       enabled: true
       endpoints:
-        - 192.168.42.10
-        - 192.168.42.11
-        - 192.168.42.12
+        - 10.20.40.20
+        - 10.20.40.21
+        - 10.20.40.22
       service:
         enabled: true
         port: 10257
@@ -131,9 +134,9 @@ spec:
     kubeScheduler:
       enabled: true
       endpoints:
-        - 192.168.42.10
-        - 192.168.42.11
-        - 192.168.42.12
+        - 10.20.40.20
+        - 10.20.40.21
+        - 10.20.40.22
       service:
         enabled: true
         port: 10259
@@ -145,15 +148,15 @@ spec:
     kubeProxy:
       enabled: true
       endpoints:
-        - 192.168.42.10
-        - 192.168.42.11
-        - 192.168.42.12
+        - 10.20.40.20
+        - 10.20.40.21
+        - 10.20.40.22
     kubeEtcd:
       enabled: true
       endpoints:
-        - 192.168.42.10
-        - 192.168.42.11
-        - 192.168.42.12
+        - 10.20.40.20
+        - 10.20.40.21
+        - 10.20.40.22
       service:
         enabled: true
         port: 2381
@@ -170,17 +173,21 @@ spec:
     prometheus:
       ingress:
         enabled: true
-        pathType: Prefix
-        ingressClassName: "nginx"
+        ingressClassName: "traefik"
+        annotations:
+          cert-manager.io/cluster-issuer: "letsencrypt-production"
+          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
         hosts:
-          - "prometheus.${SECRET_PUBLIC_DOMAIN}"
+        - "prometheus.${SECRET_DOMAIN}"
         tls:
-          - hosts:
-              - "prometheus.${SECRET_PUBLIC_DOMAIN}"
-      thanosService:
-        enabled: true
-      thanosServiceMonitor:
-        enabled: true
+          - secretName: "prom-server-cert"
+            hosts:
+              - "prometheus.${SECRET_DOMAIN}"
+
+      # thanosService:
+      #   enabled: true
+      # thanosServiceMonitor:
+      #   enabled: true
       prometheusSpec:
         replicas: 1
         replicaExternalLabelName: "replica"
@@ -191,62 +198,10 @@ spec:
         retention: 6h
         enableAdminAPI: true
         walCompression: true
-        storageSpec:
-          volumeClaimTemplate:
-            spec:
-              storageClassName: "ceph-block"
-              resources:
-                requests:
-                  storage: 10Gi
-        thanos:
-          image: quay.io/thanos/thanos:v0.24.0
-          version: v0.22.0
-          objectStorageConfig:
-            name: thanos-objstore
-            key: objstore.yml
-        additionalScrapeConfigs:
-          - job_name: cadvisor
-            honor_timestamps: true
-            static_configs:
-              - targets:
-                  - "expanse:8005"
-          - job_name: coredns
-            honor_timestamps: true
-            static_configs:
-              - targets:
-                  - "opnsense:9153"
-          - job_name: minio
-            honor_timestamps: true
-            metrics_path: /minio/v2/metrics/cluster
-            static_configs:
-              - targets:
-                  - "expanse:9000"
-          - job_name: node-exporter
-            honor_timestamps: true
-            static_configs:
-              - targets:
-                  - "opnsense:9100"
-                  - "expanse:9100"
-                  - "valetudo:9100"
-                  - "pikvm:9100"
-          - job_name: postgresql
-            honor_timestamps: true
-            static_configs:
-              - targets:
-                  - "expanse:9187"
-          - job_name: vault
-            metrics_path: /v1/sys/metrics
-            params:
-              format:
-                - prometheus
-            static_configs:
-              - targets:
-                  - "expanse:8200"
-          - job_name: pikvm
-            metrics_path: /api/export/prometheus/metrics
-            basic_auth:
-              username: admin
-              password: admin
-            static_configs:
-              - targets:
-                  - "pikvm.${SECRET_PRIVATE_DOMAIN}"
+        # storageSpec:
+        #   volumeClaimTemplate:
+        #     spec:
+        #       storageClassName: "ceph-block"
+        #       resources:
+        #         requests:
+        #           storage: 10Gi

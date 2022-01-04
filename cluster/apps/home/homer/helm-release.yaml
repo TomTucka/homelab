@@ -22,9 +22,6 @@ spec:
     env:
       TZ: "Europe/London"
 
-    # homer:
-
-
     ingress:
       main:
         enabled: true
