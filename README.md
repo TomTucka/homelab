@@ -22,7 +22,7 @@ This cluster runs on the following hardware (all nodes are running bare-metal on
 
 | Device                  | Count | OS Disk Size | Data Disk Size       | Ram  | Purpose                       |
 |-------------------------|-------|--------------|----------------------|------|-------------------------------|
-| RaspberryPi 4           | 4     | 500gb        |                      | 4GB  | k3s                           |
+| RaspberryPi 4           | 16    | 500gb        |                      | 4GB  | k3s                           |
 
 ## :handshake:&nbsp; Community
 
