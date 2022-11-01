@@ -23,6 +23,8 @@ This cluster runs on the following hardware (all nodes are running bare-metal on
 | Device                  | Count | OS Disk Size | Data Disk Size       | Ram  | Purpose                       |
 |-------------------------|-------|--------------|----------------------|------|-------------------------------|
 | RaspberryPi 4           | 16    | 500gb        |                      | 4GB  | k3s                           |
+| Dell R720               | 1     | 3tb          | 18tb                 | 48GB | Esxi                          |
+| HP DL380p G8            | 1     | 3tb          | 12tb                 | 48GB | Esxi                          |
 
 ## :handshake:&nbsp; Community
 
