@@ -18,7 +18,7 @@ This is home to my homelab configuration. For Kubernetes, [Flux](https://github.
 
 ## :file_cabinet: Hardware
 
-This cluster runs on the following hardware (all nodes are running bare-metal on Ubuntu 20.04):
+This cluster runs on the following hardware:
 
 | Device                  | Count | OS Disk Size | Data Disk Size       | Ram  | Purpose                       |
 |-------------------------|-------|--------------|----------------------|------|-------------------------------|
