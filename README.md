@@ -27,3 +27,6 @@ This cluster runs on the following hardware (all nodes are running bare-metal on
 ## :handshake:&nbsp; Community
 
 Thanks to all the people who donate their time to the [Kubernetes @Home](https://github.com/k8s-at-home/) community.
+
+
+

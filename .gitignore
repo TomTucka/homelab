@@ -1,11 +1,14 @@
-.envrc
+# Trash
+.DS_Store
+Thumbs.db
+# k8s
+kubeconfig
+# vscode-sops
+.decrypted~*.yaml
 .config.env
-configure.sh
-encrypt.sh
-k3sup.sh
-
-**/.terraform/*
-
-# .tfstate files
-**/*.tfstate
-**/*.tfstate.*
+*.agekey
+*.pub
+*.key
+# Ansible
+xanmanning.k3s*
+old_lab/
