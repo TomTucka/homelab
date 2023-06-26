@@ -26,6 +26,7 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    l7Proxy: false
     bpf:
       masquerade: true
     cluster:
