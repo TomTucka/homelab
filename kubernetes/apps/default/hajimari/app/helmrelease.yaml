@@ -35,43 +35,52 @@ spec:
       alwaysTargetBlank: true
       showGreeting: false
       showAppGroups: false
-      showAppStatus: false
+      showAppStatus: true
       showBookmarkGroups: false
       showGlobalBookmarks: false
       showAppUrls: false
       defaultEnable: true
+      defaultAppIcon: mdi:application
       namespaceSelector:
         matchNames:
           - default
           - monitoring
-        customApps:
-          - name: AdGuard
-            url: "http://adguard.${SECRET_DOMAIN}"
-            icon: lock
-          - name: vCenter
-            url: "https://vcenter.${SECRET_DOMAIN}"
-            icon: virtual-machine
-          - name: ESXi
-            url: "https://esxi.${SECRET_DOMAIN}"
-            icon: virtual-machine
-          - name: Unifi
-            url: "https://unifi.${SECRET_DOMAIN}"
-            icon: dns
-        globalBookmarks:
-          - group: Dev
-            bookmarks:
-              - name: GitHub
-                url: "https://github.com"
-              - name: GitLab
-                url: "https://gitlab.com"
-              - name: Cloudflare
-                url: "https://dash.cloudflare.com"
-          - group: Cloud
-            bookmarks:
-              - name: Gmail
-                url: "https://gmail.com"
-              - name: Google Drive
-                url: "https://drive.google.com"
+      customApps:
+        - name: AdGuard
+          url: "http://adguard.${SECRET_DOMAIN}"
+          icon: mdi:block-helper
+        - name: vCenter
+          url: "https://vcenter.${SECRET_DOMAIN}"
+          icon: mdi:state-machine
+        - name: ESXi
+          url: "https://esxi.${SECRET_DOMAIN}"
+          icon: mdi:state-machine
+        - name: Unifi
+          url: "https://unifi.${SECRET_DOMAIN}"
+          icon: mdi:dns
+        - name: TrueNas
+          url: "https://truenas.${SECRET_DOMAIN}"
+          icon: mdi:nas
+      globalBookmarks:
+        - group: Dev
+          bookmarks:
+            - name: GitHub
+              url: "https://github.com"
+              icon: mdi:github
+            - name: GitLab
+              url: "https://gitlab.com"
+              icon: mdi:gitlab
+            - name: Cloudflare
+              icon: mdi:clouds
+              url: "https://dash.cloudflare.com"
+        - group: Cloud
+          bookmarks:
+            - name: Gmail
+              icon: mdi:gmail
+              url: "https://gmail.com"
+            - name: Google Drive
+              icon: mdi:google-drive
+              url: "https://drive.google.com"
     ingress:
       main:
         enabled: true
