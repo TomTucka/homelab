@@ -61,7 +61,7 @@ tasks:
   configure:
     desc: Configure repository from bootstrap vars
     prompt: Any conflicting config in the root kubernetes and ansible directories will be overwritten... continue?
-    deps: ["workstation:direnv", "workstation:venv", "sops:age-keygen", "init"]
+    # deps: ["workstation:direnv", "workstation:venv", "sops:age-keygen", "init"]
     cmds:
       - task: .template
       - task: sops:encrypt
