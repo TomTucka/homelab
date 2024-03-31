@@ -17,3 +17,6 @@ kubernetes:
         "k3s-3":
           ansible_user: "pi"
           ansible_host: "10.20.40.23"
+        "deb-k3s-02":
+          ansible_user: "tom"
+          ansible_host: "10.20.40.16"
