@@ -11,9 +11,3 @@ resources:
   - ./metrics-server.yaml
   - ./openebs.yaml
   - ./stakater.yaml
-  - ./djjudas21.yaml
-  - ./longhorn.yaml
-  - ./onepassword-connect.yaml
-  - ./uptime-kuma.yaml
-  - ./external-secrets.yaml
-  - ./csi-driver-nfs.yaml
