@@ -11,3 +11,9 @@ resources:
   - ./metrics-server.yaml
   - ./openebs.yaml
   - ./stakater.yaml
+  - ./prometheus-community.yaml
+  - ./csi-driver-nfs.yaml
+  - ./longhorn.yaml
+  - ./onepassword-connect.yaml
+  - ./uptime-kuma.yaml
+
