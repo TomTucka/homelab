@@ -16,3 +16,4 @@ resources:
   - ./onepassword-connect.yaml
   - ./uptime-kuma.yaml
   - ./external-secrets.yaml
+  - ./csi-driver-nfs.yaml
