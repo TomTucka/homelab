@@ -67,7 +67,7 @@ spec:
             # icon: "fas fa-skull-crossbones" # Optional icon
 
             header: true
-            footer: '<p>Created with <span class="has-text-danger">❤️</span> with <a href="https://bulma.io/">bulma</a>, <a href="https://vuejs.org/">vuejs</a> & <a href="https://fontawesome.com/">font awesome</a> // Fork me on <a href="https://github.com/bastienwirtz/homer"><i class="fab fa-github-alt"></i></a></p>' # set false if you want to hide it.
+            footer: false
 
             # Optional theme customization
             theme: default
@@ -124,16 +124,27 @@ spec:
             # First level array represent a group.
             # Leave only a "items" key if not using group (group name, icon & tagstyle are optional, section separation will not be displayed).
             services:
-              - name: "Media"
-                icon: "fas fa-photo-video"
+              - name: "External Services"
+                icon: "fas fa-tools"
                 items:
-                  - name: "Plex"
-                    #icon: fas fa-compact-disc
-                    logo: "https://raw.githubusercontent.com/NX211/homer-icons/7e25ff430c87accb39b8b39ddb2e9617f46d6fb1/png/plex.png"
-                    subtitle: "Movies, TV, and Audio Books"
-                    tag: "App"
-                    url: "https://plex.apostoli.pw"
-                    target: "_plex"
+                  - name: "Cloudflare"
+                    logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/cloudflare.png"
+                    subtitle: "DNS and CDN"
+                    tag: "Services"
+                    url: "https://dash.cloudflare.com/"
+                    target: "_router"
+                  - name: "GitHub"
+                    logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/github.png"
+                    subtitle: "DNS and CDN"
+                    tag: "Services"
+                    url: "https://github.com/"
+                    target: "_github"
+                  - name: "Tailscale"
+                    logo: "https://asset.brandfetch.io/id7QyaLp8E/idYJnR6YE1.jpeg"
+                    subtitle: "VPN & Remote Access"
+                    tag: "Services"
+                    url: "https://tailscale.com/"
+                    target: "_tailscale"
               - name: "Internal Services"
                 icon: "fas fa-tools"
                 items:
@@ -160,7 +171,18 @@ spec:
                     subtitle: "vCenter management portal"
                     tag: "Services"
                     url: "http://vcenter.${SECRET_DOMAIN}"
-                    target: "_vcenter"
+                  - name: "it-tools"
+                    logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/ittools.png"
+                    subtitle: "Useful IT Tools"
+                    tag: "Services"
+                    url: "http://it-tools.${SECRET_DOMAIN}"
+                    target: "_ittools"
+                  - name: "PaperlessNGX"
+                    logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/paperless-ng.png"
+                    subtitle: "Document Management"
+                    tag: "Services"
+                    url: "http://paperless.${SECRET_DOMAIN}"
+                    target: "_ittools"
               - name: "Lab"
                 icon: "fas fa-server"
                 items:
@@ -209,12 +231,13 @@ spec:
                   #   tag: "Tools"
                   #   url: "https://prometheus.${SECRET_DOMAIN}"
                   #   target: "_prometheus"
-              - name: "External Services"
-                icon: "fas fa-tools"
+              - name: "Media"
+                icon: "fas fa-photo-video"
                 items:
-                  - name: "Cloudflare"
-                    logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/cloudflare.png"
-                    subtitle: "DNS and CDN"
-                    tag: "Services"
-                    url: "https://dash.cloudflare.com/"
-                    target: "_router"
+                  - name: "Plex"
+                    #icon: fas fa-compact-disc
+                    logo: "https://raw.githubusercontent.com/NX211/homer-icons/7e25ff430c87accb39b8b39ddb2e9617f46d6fb1/png/plex.png"
+                    subtitle: "Movies, TV, and Audio Books"
+                    tag: "App"
+                    url: "https://plex.apostoli.pw"
+                    target: "_plex"
