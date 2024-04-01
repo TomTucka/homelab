@@ -16,4 +16,4 @@ resources:
   - ./longhorn.yaml
   - ./onepassword-connect.yaml
   - ./uptime-kuma.yaml
-
+  - ./external-secrets.yaml
