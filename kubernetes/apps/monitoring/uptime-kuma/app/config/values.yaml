@@ -41,11 +41,11 @@ service:
 persistence:
   data:
     enabled: true
-    storageClass: longhorn
+    storageClass: nfs-csi
     accessMode: ReadWriteOnce
     size: 2Gi
     globalMounts:
-      - path: /app/data
+      - path: /uptime/app/data
 
 ingress:
   uptime-kuma:
