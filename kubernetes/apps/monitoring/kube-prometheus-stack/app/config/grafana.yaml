@@ -10,5 +10,5 @@ grafana:
     hosts: ["grafana.${SECRET_DOMAIN}"]
     paths: ["/"]
     tls:
-      - hosts: ["grafana.${SECRET_DOMAIN}"]
+      - hosts: "grafana.${SECRET_DOMAIN}"
         secretName: grafana-${SECRET_DOMAIN}-cert

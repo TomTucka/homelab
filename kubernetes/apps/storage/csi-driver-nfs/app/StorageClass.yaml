@@ -8,6 +8,7 @@ provisioner: nfs.csi.k8s.io
 parameters:
   server: ${SECRET_TRUENAS_IP}
   share: ${SECRET_NFS_DIRECTORY}
+  mountPermissions: "0777"
 reclaimPolicy: Retain
 volumeBindingMode: Immediate
 mountOptions:
