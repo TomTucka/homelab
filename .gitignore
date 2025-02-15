@@ -14,6 +14,7 @@ talosconfig
 # Ansible
 .venv*
 .venv/
+venv/*
 # Taskfile
 .task
 # Brew

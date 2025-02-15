@@ -3,13 +3,13 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: "${SECRET_DOMAIN}-staging"
+  name: "harrier-staging"
 spec:
-  secretName: "${SECRET_DOMAIN}-staging-tls"
+  secretName: "harrier-staging-tls"
   issuerRef:
     name: letsencrypt-staging
     kind: ClusterIssuer
-  commonName: "${SECRET_DOMAIN}"
+  commonName: "harrier.network"
   dnsNames:
-    - "${SECRET_DOMAIN}"
-    - "*.${SECRET_DOMAIN}"
+    - "harrier.network"
+    - "*.harrier.network"
