@@ -1,0 +1,132 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/budimanjojo/talhelper/master/pkg/config/schemas/talconfig.json
+---
+# renovate: datasource=docker depName=ghcr.io/siderolabs/installer
+talosVersion: v1.9.4
+# renovate: datasource=docker depName=ghcr.io/siderolabs/kubelet
+kubernetesVersion: v1.32.2
+
+clusterName: kubernetes
+endpoint: https://10.20.40.14:6443
+
+clusterPodNets:
+  - "10.69.0.0/16"
+clusterSvcNets:
+  - "10.96.0.0/16"
+
+additionalApiServerCertSans: &sans
+  - "10.20.40.14"
+  - "k8s-api.harrier.network"
+  - "127.0.0.1"
+additionalMachineCertSans: *sans
+
+# Disable built-in Flannel to use Cilium
+cniConfig:
+  name: none
+
+nodes:
+  - hostname: "talos-0"
+    ipAddress: "10.20.40.30"
+    installDisk: "/dev/nvme0n1"
+    machineSpec:
+      secureboot: false
+    talosImageURL: factory.talos.dev/installer/376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba
+    controlPlane: true
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "54:bf:64:a7:70:27"
+        dhcp: false
+        addresses:
+          - "10.20.40.30/24"
+        routes:
+          - network: "0.0.0.0/0"
+            gateway: "10.20.40.1"
+        mtu: 1500
+        vip:
+          ip: "10.20.40.14"
+  - hostname: "talos-1"
+    ipAddress: "10.20.40.31"
+    installDisk: "/dev/nvme0n1"
+    machineSpec:
+      secureboot: false
+    talosImageURL: factory.talos.dev/installer/376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba
+    controlPlane: true
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "e4:b9:7a:ec:2b:13"
+        dhcp: false
+        addresses:
+          - "10.20.40.31/24"
+        routes:
+          - network: "0.0.0.0/0"
+            gateway: "10.20.40.1"
+        mtu: 1500
+        vip:
+          ip: "10.20.40.14"
+  - hostname: "talos-2"
+    ipAddress: "10.20.40.32"
+    installDisk: "/dev/nvme0n1"
+    machineSpec:
+      secureboot: false
+    talosImageURL: factory.talos.dev/installer/376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba
+    controlPlane: true
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "e4:b9:7a:eb:f8:2d"
+        dhcp: false
+        addresses:
+          - "10.20.40.32/24"
+        routes:
+          - network: "0.0.0.0/0"
+            gateway: "10.20.40.1"
+        mtu: 1500
+        vip:
+          ip: "10.20.40.14"
+  - hostname: "talos-3"
+    ipAddress: "10.20.40.33"
+    installDisk: "/dev/nvme0n1"
+    machineSpec:
+      secureboot: false
+    talosImageURL: factory.talos.dev/installer/376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba
+    controlPlane: false
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "e4:b9:7a:e8:57:23"
+        dhcp: false
+        addresses:
+          - "10.20.40.33/24"
+        routes:
+          - network: "0.0.0.0/0"
+            gateway: "10.20.40.1"
+        mtu: 1500
+  - hostname: "talos-4"
+    ipAddress: "10.20.40.34"
+    installDisk: "/dev/nvme0n1"
+    machineSpec:
+      secureboot: false
+    talosImageURL: factory.talos.dev/installer/376567988ad370138ad8b2698212367b8edcb69b5fd68c80be1f2ec7d603b4ba
+    controlPlane: false
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: "54:bf:64:a7:a1:04"
+        dhcp: false
+        addresses:
+          - "10.20.40.34/24"
+        routes:
+          - network: "0.0.0.0/0"
+            gateway: "10.20.40.1"
+        mtu: 1500
+
+# Global patches
+patches:
+  - "@./patches/global/machine-files.yaml"
+  - "@./patches/global/machine-kubelet.yaml"
+  - "@./patches/global/machine-network.yaml"
+  - "@./patches/global/machine-sysctls.yaml"
+  - "@./patches/global/machine-time.yaml"
+
+# Controller patches
+controlPlane:
+  patches:
+    - "@./patches/controller/admission-controller-patch.yaml"
+    - "@./patches/controller/cluster.yaml"
+
