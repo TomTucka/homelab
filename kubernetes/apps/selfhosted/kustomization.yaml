@@ -6,6 +6,6 @@ resources:
   - ./namespace.yaml
   - ./it-tools/ks.yaml
   - ./homer/ks.yaml
-  # - ./stirling-pdf/ks.yaml
-  # - ./hoarder/ks.yaml
+  - ./stirling-pdf/ks.yaml
+  - ./hoarder/ks.yaml
   - ./searxng/ks.yaml
