@@ -12,6 +12,7 @@ resources:
   - ./external-dns.yaml
   - ./ingress-nginx.yaml
   - ./jetstack.yaml
+  - ./grafana.yaml
   - ./k8s-gateway.yaml
   - ./metrics-server.yaml
   - ./spegel.yaml
