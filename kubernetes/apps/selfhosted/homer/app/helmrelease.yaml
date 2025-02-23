@@ -1,0 +1,259 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: homer
+  namespace: home
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: homer
+      version: 8.2.3
+      sourceRef:
+        kind: HelmRepository
+        name: djjudas21
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    image:
+      repository: b4bz/homer
+      tag: v23.05.1
+      pullPolicy: IfNotPresent
+    service:
+      main:
+        ports:
+          http:
+            port: 8080
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: internal
+        hosts:
+          - host: &host "dashboard.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - *host
+    persistence:
+      config:
+        enabled: true
+        existingClaim: homer-config
+        mountPath: /www/assets
+    configmap:
+      config:
+        enabled: true
+        data:
+          config.yml: |
+            ---
+            # Homepage configuration
+            # See https://fontawesome.com/icons for icons options
+
+            title: "Dashboard"
+            subtitle: "Welcome to The Coach House"
+            logo: "logo.png"
+            # icon: "fas fa-skull-crossbones" # Optional icon
+
+            header: true
+            footer: false
+
+            # Optional theme customization
+            theme: default
+            colors:
+              light:
+                highlight-primary: "#3367d6"
+                highlight-secondary: "#4285f4"
+                highlight-hover: "#5a95f5"
+                background: "#f5f5f5"
+                card-background: "#ffffff"
+                text: "#363636"
+                text-header: "#ffffff"
+                text-title: "#303030"
+                text-subtitle: "#424242"
+                card-shadow: rgba(0, 0, 0, 0.1)
+                link-hover: "#363636"
+              dark:
+                highlight-primary: "#3367d6"
+                highlight-secondary: "#4285f4"
+                highlight-hover: "#5a95f5"
+                background: "#131313"
+                card-background: "#2b2b2b"
+                text: "#eaeaea"
+                text-header: "#ffffff"
+                text-title: "#fafafa"
+                text-subtitle: "#f5f5f5"
+                card-shadow: rgba(0, 0, 0, 0.4)
+                link-hover: "#ffdd57"
+
+            # Optional message
+            # message:
+            #   #url: https://b4bz.io
+            #   style: "is-dark" # See https://bulma.io/documentation/components/message/#colors for styling options.
+            #   title: "Service List"
+            #   icon: "fa fa-grin"
+            #   content: "This is a list of all services available in our home. <br /> Find more information on <a href='https://github.com/jgilfoil/k8s-gitops'>github.com/jgilfoil/k8s-gitops</a>"
+
+            # Optional navbar
+            # links: [] # Allows for navbar (dark mode, layout, and search) without any links
+            links:
+              - name: "YouTube"
+                icon: "fab fa-youtube"
+                uri: "https://youtube.com"
+                target: "_blank"
+              - name: "GitHub"
+                icon: "fab fa-github"
+                url: "https://github.com"
+                target: "_blank" # optional html a tag target attribute
+              - name: "GitLab"
+                icon: "fab fa-gitlab"
+                url: "https://gitlab.com"
+                target: "_blank" # optional html a tag target attribute
+              - name: "ChatGPT"
+                icon: "fas fa-comment"
+                url: "https://platform.openai.com/"
+
+            # Services
+            # First level array represent a group.
+            # Leave only a "items" key if not using group (group name, icon & tagstyle are optional, section separation will not be displayed).
+            services:
+              - name: "External Services"
+                icon: "fas fa-tools"
+                items:
+                  - name: "Cloudflare"
+                    logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/cloudflare.png"
+                    subtitle: "DNS and CDN"
+                    tag: "Services"
+                    url: "https://dash.cloudflare.com/"
+                    target: "_router"
+                  - name: "GitHub"
+                    logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/github.png"
+                    subtitle: "DNS and CDN"
+                    tag: "Services"
+                    url: "https://github.com/"
+                    target: "_github"
+                  - name: "Tailscale"
+                    logo: "https://asset.brandfetch.io/id7QyaLp8E/idYJnR6YE1.jpeg"
+                    subtitle: "VPN & Remote Access"
+                    tag: "Services"
+                    url: "https://tailscale.com/"
+                    target: "_tailscale"
+              - name: "Self Hosted"
+                icon: "fas fa-tools"
+                items:
+                  - name: "PaperlessNGX"
+                    logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/paperless-ng.png"
+                    subtitle: "Document Management"
+                    tag: "SelfHosted"
+                    url: "http://paperless.${SECRET_DOMAIN}"
+                    target: "_paperless"
+                  - name: "Homebox"
+                    logo: "https://github.com/NX211/homer-icons/blob/master/png/homebox.png?raw=true"
+                    subtitle: "Asset Tracking"
+                    tag: "SelfHosted"
+                    url: "http://homebox.${SECRET_DOMAIN}"
+                    target: "_homebox"
+                  - name: "Stirling PDF"
+                    logo: "https://raw.githubusercontent.com/Stirling-Tools/Stirling-PDF/main/docs/stirling.png"
+                    subtitle: "PDF Tools"
+                    tag: "SelfHosted"
+                    url: "http://stirling-pdf.${SECRET_DOMAIN}"
+                    target: "_stirling-pdf"
+
+              - name: "Tools"
+                icon: "fas fa-tools"
+                items:
+                  - name: "Unifi"
+                    logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/unifi.png"
+                    subtitle: "Unifi Control Plane"
+                    tag: "Services"
+                    url: "http://unifi.${SECRET_DOMAIN}"
+                    target: "_router"
+                  - name: "TrueNAS"
+                    logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/truenas.png"
+                    subtitle: "TrueNAS Scale"
+                    tag: "Services"
+                    url: "http://truenas.${SECRET_DOMAIN}"
+                    target: "_truenas"
+                  - name: "AdGuard"
+                    logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/adguardhome.png"
+                    subtitle: "Ad blocker and DNS"
+                    tag: "Services"
+                    url: "http://adguard.${SECRET_DOMAIN}"
+                    target: "_adguard"
+                  - name: "it-tools"
+                    logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/ittools.png"
+                    subtitle: "Useful IT Tools"
+                    tag: "Services"
+                    url: "http://it-tools.${SECRET_DOMAIN}"
+                    target: "_ittools"
+
+              - name: "Lab"
+                icon: "fas fa-server"
+                items:
+                  - name: "Longhorn"
+                    logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/longhorn.png"
+                    subtitle: "Distributed block storage"
+                    tag: "Tools"
+                    url: "https://longhorn.${SECRET_DOMAIN}"
+                  - name: "Uptime Kuma"
+                    logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/uptimekuma.png"
+                    subtitle: "self-hosted monitoring tool."
+                    tag: "Tools"
+                    url: "https://uptime.${SECRET_DOMAIN}"
+                  - name: "Grafana"
+                    logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/grafana.png"
+                    subtitle: "Analytics and Visisualations"
+                    tag: "Tools"
+                    url: "https://grafana.${SECRET_DOMAIN}"
+                    target: "_grafana"
+                  - name: "Prometheus"
+                    logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/prometheus.png"
+                    subtitle: "Monitoring and Metrics"
+                    tag: "Tools"
+                    url: "https://prometheus.${SECRET_DOMAIN}"
+                    target: "_prometheus"
+                  - name: "Alert Manager"
+                    logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/alertmanager.png"
+                    subtitle: "Alerting"
+                    tag: "Tools"
+                    url: "https://alerts.${SECRET_DOMAIN}"
+                    target: "_prometheus"
+                  - name: "Kubernetes"
+                    logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/kubernetes-dashboard.png"
+                    subtitle: "Cluster Dashboard"
+                    tag: "Tools"
+                    url: "https://kubernetes.${SECRET_DOMAIN}"
+                    target: "_kubernetes"
+                  # - name: "Vault"
+                  #   logo: "https://raw.githubusercontent.com/NX211/homer-icons/master/png/vault.png"
+                  #   subtitle: "Shhhh! Secrets"
+                  #   tag: "Tools"
+                  #   url: "https://vault.${SECRET_DOMAIN}"
+                    # target: "_vault"
+                  # - name: "Boundary"
+                  #   subtitle: "Secure remote access"
+                  #   tag: "Tools"
+                  #   url: "https://prometheus.${SECRET_DOMAIN}"
+                  #   target: "_prometheus"
+              - name: "Media"
+                icon: "fas fa-photo-video"
+                items:
+                  - name: "Plex"
+                    #icon: fas fa-compact-disc
+                    logo: "https://raw.githubusercontent.com/NX211/homer-icons/7e25ff430c87accb39b8b39ddb2e9617f46d6fb1/png/plex.png"
+                    subtitle: "Movies, TV, and Audio Books"
+                    tag: "App"
+                    url: "https://plex.apostoli.pw"
+                    target: "_plex"
